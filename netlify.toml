@@ -5,13 +5,19 @@
   publish = "."
   command = ""
 
+# Redirects - ensure thank-you page works with all URL variations
 # Ensure index.html is served as default
 [[redirects]]
   from = "/"
   to = "/index.html"
   status = 200
 
-# Redirects for thank-you page (optional - for clean URLs)
+[[redirects]]
+  from = "/thank-you/"
+  to = "/thank-you.html"
+  status = 200
+
+# Form handling
 [[redirects]]
   from = "/thank-you"
   to = "/thank-you.html"
