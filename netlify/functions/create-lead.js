@@ -28,9 +28,9 @@ exports.handler = async (event) => {
             };
         }
 
-        // Connect to Neon PostgreSQL using DATABASE_URL from environment
+        // Connect to Neon PostgreSQL using NETLIFY_DATABASE_URL from environment
         client = new Client({
-            connectionString: process.env.DATABASE_URL,
+            connectionString: process.env.NETLIFY_DATABASE_URL,
             ssl: {
                 rejectUnauthorized: false
             }
