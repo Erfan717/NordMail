@@ -1,9 +1,9 @@
 # Netlify configuration file
 
 [build]
-  # No build command needed - static site
+  # Static site - npm install runs automatically when package.json exists
   publish = "."
-  command = ""
+  command = "echo 'Static site build'"
 
 # Redirects - ensure thank-you page works with all URL variations
 # Ensure index.html is served as default
