@@ -1,0 +1,9 @@
+{
+  "name": "nordmail",
+  "version": "1.0.0",
+  "description": "NordMail - Email marketing for Norwegian businesses",
+  "private": true,
+  "dependencies": {
+    "pg": "^8.11.3"
+  }
+}
