@@ -3,11 +3,13 @@
 [build]
   # No build command needed - static site
   publish = "."
+  command = ""
 
 # Redirects - ensure thank-you page works with all URL variations
+# Ensure index.html is served as default
 [[redirects]]
-  from = "/thank-you"
-  to = "/thank-you.html"
+  from = "/"
+  to = "/index.html"
   status = 200
 
 [[redirects]]
@@ -17,6 +19,6 @@
 
 # Form handling
 [[redirects]]
-  from = "/kontakt"
+  from = "/thank-you"
   to = "/thank-you.html"
   status = 200
