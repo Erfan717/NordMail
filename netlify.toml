@@ -4,9 +4,14 @@
   # No build command needed - static site
   publish = "."
 
-# Redirects
+# Redirects - ensure thank-you page works with all URL variations
 [[redirects]]
   from = "/thank-you"
+  to = "/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/thank-you/"
   to = "/thank-you.html"
   status = 200
 
