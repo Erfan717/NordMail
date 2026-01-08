@@ -3,6 +3,13 @@
 [build]
   # No build command needed - static site
   publish = "."
+  command = ""
+
+# Ensure index.html is served as default
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
 
 # Redirects for thank-you page (optional - for clean URLs)
 [[redirects]]
