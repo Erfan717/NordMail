@@ -4,14 +4,18 @@
   # No build command needed - static site
   publish = "."
 
-# Redirects
+# Redirects for thank-you page
 [[redirects]]
   from = "/thank-you"
   to = "/thank-you.html"
   status = 200
 
-# Form handling
+# Handle form submissions - redirect to thank-you page
 [[redirects]]
-  from = "/kontakt"
+  from = "/*"
   to = "/thank-you.html"
   status = 200
+  force = false
+  conditions = {Role = ["admin"]}
+  
+# This won't work for forms, so we'll use Netlify Dashboard instead
