@@ -1,0 +1,17 @@
+# Netlify configuration file
+
+[build]
+  # No build command needed - static site
+  publish = "."
+
+# Redirects
+[[redirects]]
+  from = "/thank-you"
+  to = "/thank-you.html"
+  status = 200
+
+# Form handling
+[[redirects]]
+  from = "/kontakt"
+  to = "/thank-you.html"
+  status = 200

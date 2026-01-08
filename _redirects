@@ -1,0 +1,4 @@
+# Netlify redirects file
+# This ensures that form submissions redirect correctly
+
+/thank-you /thank-you.html 200
