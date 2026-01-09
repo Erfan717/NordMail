@@ -81,13 +81,12 @@
         });
     }
 
-    // Contact form submission - sends data to Netlify Function which stores in Neon DB
-    // (Netlify Forms removed - replaced with database-based submission)
+    // Contact form submission - Netlify Forms with webhook notification
+    // Form submits to Netlify Forms, which triggers webhook to kontakt function
     const contactForm = document.getElementById('kontakt-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-
+        contactForm.addEventListener('submit', function(e) {
+            // Client-side validation before Netlify Forms submission
             const requiredFields = contactForm.querySelectorAll('[required]');
             let isValid = true;
 
@@ -119,53 +118,23 @@
                 }
             }
 
-            // If validation fails, show message
+            // If validation fails, prevent submission
             if (!isValid) {
+                e.preventDefault();
                 alert('Vennligst fyll ut alle påkrevde felt korrekt.');
-                return;
+                return false;
             }
 
-            // Show loading state
+            // Show loading state (form will submit to Netlify Forms)
             const submitBtn = contactForm.querySelector('button[type="submit"]');
-            let originalBtnText = '';
             if (submitBtn) {
-                originalBtnText = submitBtn.textContent;
                 submitBtn.textContent = 'Sender...';
                 submitBtn.disabled = true;
             }
 
-            // Collect form data and send to Netlify Function
-            const formData = new FormData(contactForm);
-            const data = {
-                name: formData.get('navn'),
-                email: formData.get('email'),
-                website: formData.get('nettside') || '',
-                service: formData.get('tjeneste'),
-                budget: formData.get('budsjett'),
-                message: formData.get('melding') || ''
-            };
-
-            try {
-                const response = await fetch('/.netlify/functions/create-lead', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                if (response.ok) {
-                    window.location.href = '/thank-you.html';
-                } else {
-                    throw new Error('Submission failed');
-                }
-            } catch (error) {
-                alert('Beklager, noe gikk galt. Vennligst prøv igjen senere.');
-                if (submitBtn) {
-                    submitBtn.textContent = originalBtnText;
-                    submitBtn.disabled = false;
-                }
-            }
+            // Form will submit to Netlify Forms automatically
+            // Netlify Forms will redirect to thank-you.html (configured in Netlify Dashboard)
+            // Webhook will trigger kontakt function for email sending
         });
 
         // Remove error styling on input

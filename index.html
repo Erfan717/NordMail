@@ -166,8 +166,13 @@
         <div class="container">
             <h2 class="section-title">Få Gratis Gjennomgang</h2>
             <p class="section-subtitle">Uforpliktende tilbud basert på dine behov</p>
-            <!-- Netlify Forms removed - form submission now handled via Netlify Function to Neon DB -->
-            <form id="kontakt-form" class="contact-form">
+            <!-- Netlify Forms with webhook notification to kontakt function -->
+            <form name="kontakt" id="kontakt-form" class="contact-form" netlify netlify-honeypot="bot-field" data-netlify="true">
+                <!-- Honeypot field (hidden from users) -->
+                <div style="display: none;">
+                    <label>Ikke fyll ut dette feltet: <input name="bot-field" /></label>
+                </div>
+                
                 <div class="form-group">
                     <label for="navn">Navn *</label>
                     <input type="text" id="navn" name="navn" required>
