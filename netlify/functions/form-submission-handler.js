@@ -1,11 +1,11 @@
 // Alternative: Netlify Function triggered directly by form submission
 // This is called automatically when a form is submitted (if configured in netlify.toml)
 
-const { Resend } = require('resend');
+import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   try {
     // Netlify Forms passes data in event.body as JSON
     const formData = JSON.parse(event.body);

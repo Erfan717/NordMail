@@ -1,12 +1,12 @@
 // Netlify Function: Send automatic thank-you email to form submitter
 // This function is triggered when a form is submitted
 
-const { Resend } = require('resend');
+import { Resend } from 'resend';
 
 // Initialize Resend with API key from environment variable
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
     return {
