@@ -81,16 +81,16 @@
         });
     }
 
-    // Basic Form Validation (without breaking Netlify Forms)
-    const contactForm = document.querySelector('form[name="kontakt"]');
+    // Contact form submission - sends data to Netlify Function which stores in Neon DB
+    // (Netlify Forms removed - replaced with database-based submission)
+    const contactForm = document.getElementById('kontakt-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            // Let Netlify handle the form submission
-            // This is just for UX feedback
-            
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
             const requiredFields = contactForm.querySelectorAll('[required]');
             let isValid = true;
-            
+
             requiredFields.forEach(field => {
                 if (!field.value.trim()) {
                     isValid = false;
@@ -119,16 +119,48 @@
                 }
             }
 
-            // If validation fails, prevent default and show message
+            // If validation fails, show message
             if (!isValid) {
-                e.preventDefault();
-                // Show a simple message (you could enhance this)
                 alert('Vennligst fyll ut alle påkrevde felt korrekt.');
-                return false;
+                return;
             }
 
-            // If valid, let Netlify handle the submission
-            // The form will submit normally to Netlify
+            // Show loading state
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = 'Sender...';
+            submitBtn.disabled = true;
+
+            // Collect form data and send to Netlify Function
+            const formData = new FormData(contactForm);
+            const data = {
+                name: formData.get('navn'),
+                email: formData.get('email'),
+                website: formData.get('nettside') || '',
+                service: formData.get('tjeneste'),
+                budget: formData.get('budsjett'),
+                message: formData.get('melding') || ''
+            };
+
+            try {
+                const response = await fetch('/.netlify/functions/create-lead', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    window.location.href = '/thank-you.html';
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                alert('Beklager, noe gikk galt. Vennligst prøv igjen senere.');
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+            }
         });
 
         // Remove error styling on input
@@ -140,17 +172,6 @@
                     this.parentElement.style.color = '';
                 }
             });
-        });
-    }
-
-    // Add loading state to submit button
-    if (contactForm) {
-        contactForm.addEventListener('submit', function() {
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            if (submitBtn) {
-                submitBtn.textContent = 'Sender...';
-                submitBtn.disabled = true;
-            }
         });
     }
 
