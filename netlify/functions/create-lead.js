@@ -2,9 +2,10 @@
 // Stores contact form submissions in Neon PostgreSQL database
 // Replaces previous Netlify Forms submission handling
 
-const { Client } = require('pg');
+import pg from 'pg';
+const { Client } = pg;
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
     // Only allow POST requests
     if (event.httpMethod !== 'POST') {
         return {
