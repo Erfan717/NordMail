@@ -127,9 +127,12 @@
 
             // Show loading state
             const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.textContent;
-            submitBtn.textContent = 'Sender...';
-            submitBtn.disabled = true;
+            let originalBtnText = '';
+            if (submitBtn) {
+                originalBtnText = submitBtn.textContent;
+                submitBtn.textContent = 'Sender...';
+                submitBtn.disabled = true;
+            }
 
             // Collect form data and send to Netlify Function
             const formData = new FormData(contactForm);
@@ -158,8 +161,10 @@
                 }
             } catch (error) {
                 alert('Beklager, noe gikk galt. Vennligst prøv igjen senere.');
-                submitBtn.textContent = originalBtnText;
-                submitBtn.disabled = false;
+                if (submitBtn) {
+                    submitBtn.textContent = originalBtnText;
+                    submitBtn.disabled = false;
+                }
             }
         });
 
