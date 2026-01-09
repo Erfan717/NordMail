@@ -5,6 +5,12 @@
   publish = "."
   command = ""
 
+# Functions directory
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+  included_files = ["netlify/functions/**"]
+
 # Ensure index.html is served as default
 [[redirects]]
   from = "/"
